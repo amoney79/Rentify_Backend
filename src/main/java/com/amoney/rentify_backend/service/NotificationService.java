@@ -50,9 +50,9 @@ public class NotificationService {
 
         try {
             // Push to personal queue /topic/notifications/{userId}
-            messagingTemplate.convertAndSend("/topic/notifications/" + recipient.getId(), payload);
+            messagingTemplate.convertAndSend("/topic/notifications/" + recipient.getId(), (Object) payload);
             // Push to general topic /topic/notifications
-            messagingTemplate.convertAndSend("/topic/notifications", payload);
+            messagingTemplate.convertAndSend("/topic/notifications", (Object) payload);
             logger.info("Dispatched WebSocket notification to user {}: {}", recipient.getId(), title);
         } catch (Exception e) {
             logger.warn("Could not dispatch WebSocket notification: {}", e.getMessage());

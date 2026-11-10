@@ -88,7 +88,7 @@ public class ChatService {
 
         try {
             // Push to conversation topic
-            messagingTemplate.convertAndSend("/topic/messages/" + conversationId, payload);
+            messagingTemplate.convertAndSend("/topic/messages/" + conversationId, (Object) payload);
             logger.info("Delivered chat message to /topic/messages/{}", conversationId);
         } catch (Exception e) {
             logger.warn("Could not broadcast message via STOMP: {}", e.getMessage());

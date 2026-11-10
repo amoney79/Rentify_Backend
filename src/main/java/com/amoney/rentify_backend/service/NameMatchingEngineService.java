@@ -30,7 +30,7 @@ public class NameMatchingEngineService {
     private final LevenshteinDistance levenshtein = new LevenshteinDistance();
 
     @Value("${rentify.verification.ownership-name-match-threshold:0.82}")
-    private double threshold;
+    private double threshold = 0.82; // field-level default for non-Spring instantiation (unit tests)
 
     public String normalizeName(String name) {
         if (name == null) return "";
@@ -93,10 +93,17 @@ public class NameMatchingEngineService {
         double jwScore = jaroWinkler.apply(norm1, norm2);
 
         // 4. Combined weighted score:
-        // Token score has highest weight (0.45) for African/global name reordering
+        // Token score has highest weight (0.50) for African/global name reordering
         // Jaro-Winkler weight (0.30) for prefix typing & phonetics
-        // Levenshtein weight (0.25) for character level edits
-        double combinedScore = (tokenScore * 0.45) + (jwScore * 0.30) + (levenshteinScore * 0.25);
+        // Levenshtein weight (0.20) for character level edits
+        // When token score is perfect (all tokens match, just reordered), boost combined score
+        double combinedScore;
+        if (tokenScore >= 1.0) {
+            // All tokens fully matched — permutation case; treat as EXACT equivalent
+            combinedScore = 1.0;
+        } else {
+            combinedScore = (tokenScore * 0.50) + (jwScore * 0.30) + (levenshteinScore * 0.20);
+        }
         combinedScore = Math.min(1.0, Math.max(0.0, Math.round(combinedScore * 1000.0) / 1000.0));
 
         boolean isMatch = combinedScore >= threshold;

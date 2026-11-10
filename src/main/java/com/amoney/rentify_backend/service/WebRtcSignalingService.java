@@ -46,12 +46,12 @@ public class WebRtcSignalingService {
 
         // Broadcast to call channel
         if (callId != null && !callId.isBlank()) {
-            messagingTemplate.convertAndSend("/topic/call/" + callId, signalPayload);
+            messagingTemplate.convertAndSend("/topic/call/" + callId, (Object) signalPayload);
         }
 
         // Also route directly to target user if specified
         if (targetUserId != null && !targetUserId.isBlank()) {
-            messagingTemplate.convertAndSend("/topic/webrtc/" + targetUserId, signalPayload);
+            messagingTemplate.convertAndSend("/topic/webrtc/" + targetUserId, (Object) signalPayload);
         }
     }
 }

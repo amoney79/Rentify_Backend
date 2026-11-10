@@ -1,0 +1,3 @@
+2026-11-11 01:46:47.664184+03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "AVATAR_URL CHARACTER VARYING(255)": "'https://lh3.googleusercontent.com/aida-public/AB6AXuD68fJB-SrzHOyOdCdgNYcJm9qKN... (321)"; SQL statement:
+insert into users (agency_license_number,agency_name,agent_status,avatar_url,county,created_at,email,full_name,id_number,identity_status,password,phone,role,updated_at,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,default) [22001-240]
