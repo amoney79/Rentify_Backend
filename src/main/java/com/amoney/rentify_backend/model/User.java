@@ -44,7 +44,7 @@ public class User {
     private AgentStatus agentStatus = AgentStatus.NOT_APPLICABLE;
 
     private String idNumber;
-
+@Column(name="avatar_Url", length=1000)
     private String avatarUrl;
 
     private String county;
