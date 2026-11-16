@@ -1,0 +1,6 @@
+#FileLock
+#Mon Nov 16 23:42:24 EAT 2026
+hostName=192.168.1.144
+id=1a1e618b577852bfaeb05c30f352706adec9bc1f082
+method=file
+server=192.168.1.144\:53772
