@@ -1,0 +1,117 @@
+{"properties": [
+  {
+    "name": "spring.h2.console.enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.h2.console.enabled'"
+  },
+  {
+    "name": "spring.h2.console.path",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.h2.console.path'"
+  },
+  {
+    "name": "spring.h2.console.settings.web-allow-others",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.h2.console.settings.web-allow-others'"
+  },
+  {
+    "name": "rentify.security.jwt.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'rentify.security.jwt.secret'"
+  },
+  {
+    "name": "rentify.security.jwt.expiration-ms",
+    "type": "java.lang.String",
+    "description": "A description for 'rentify.security.jwt.expiration-ms'"
+  },
+  {
+    "name": "rentify.security.cors.allowed-origins",
+    "type": "java.lang.String",
+    "description": "A description for 'rentify.security.cors.allowed-origins'"
+  },
+  {
+    "name": "azure.blob.connection-string",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.blob.connection-string'"
+  },
+  {
+    "name": "azure.blob.container-name",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.blob.container-name'"
+  },
+  {
+    "name": "azure.blob.sas-token-duration-minutes",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.blob.sas-token-duration-minutes'"
+  },
+  {
+    "name": "azure.blob.mock-mode",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.blob.mock-mode'"
+  },
+  {
+    "name": "azure.blob.local-storage-path",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.blob.local-storage-path'"
+  },
+  {
+    "name": "azure.ai.document-intelligence.api-key",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.ai.document-intelligence.api-key'"
+  },
+  {
+    "name": "azure.ai.document-intelligence.endpoint",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.ai.document-intelligence.endpoint'"
+  },
+  {
+    "name": "azure.ai.document-intelligence.mock-mode",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.ai.document-intelligence.mock-mode'"
+  },
+  {
+    "name": "azure.ai.face.endpoint",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.ai.face.endpoint'"
+  },
+  {
+    "name": "azure.ai.face.api-key",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.ai.face.api-key'"
+  },
+  {
+    "name": "azure.ai.face.mock-mode",
+    "type": "java.lang.String",
+    "description": "A description for 'azure.ai.face.mock-mode'"
+  },
+  {
+    "name": "rentify.verification.face-match-threshold",
+    "type": "java.lang.String",
+    "description": "A description for 'rentify.verification.face-match-threshold'"
+  },
+  {
+    "name": "rentify.verification.liveness-confidence-threshold",
+    "type": "java.lang.String",
+    "description": "A description for 'rentify.verification.liveness-confidence-threshold'"
+  },
+  {
+    "name": "rentify.verification.ownership-name-match-threshold",
+    "type": "java.lang.String",
+    "description": "A description for 'rentify.verification.ownership-name-match-threshold'"
+  },
+  {
+    "name": "rentify.verification.agent-authorization-threshold",
+    "type": "java.lang.String",
+    "description": "A description for 'rentify.verification.agent-authorization-threshold'"
+  },
+  {
+    "name": "rentify.verification.corporate-ownership-threshold",
+    "type": "java.lang.String",
+    "description": "A description for 'rentify.verification.corporate-ownership-threshold'"
+  },
+  {
+    "name": "rentify.webrtc.ice-servers",
+    "type": "java.lang.String",
+    "description": "A description for 'rentify.webrtc.ice-servers'"
+  }
+]}
