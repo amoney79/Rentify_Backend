@@ -1,12 +1,13 @@
 package com.amoney.rentify_backend.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "ownership_verifications")
+@Document(collection = "ownership_verifications")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,20 +16,15 @@ import java.time.LocalDateTime;
 public class OwnershipVerification {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property property;
+    @DBRef
+        private Property property;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "applicant_user_id", nullable = false)
-    private User applicantUser;
+    @DBRef
+        private User applicantUser;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @Builder.Default
+            @Builder.Default
     private OwnershipType ownershipType = OwnershipType.INDIVIDUAL;
 
     // Extracted Fields from Azure AI Document Intelligence
@@ -58,23 +54,19 @@ public class OwnershipVerification {
 
     private String directorIdBlobName;
 
-    @Column(columnDefinition = "TEXT")
-    private String specialScenarioNotes;
+        private String specialScenarioNotes;
 
     private Boolean escalatedToManualReview;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @Builder.Default
+            @Builder.Default
     private PropertyVerificationStatus status = PropertyVerificationStatus.PENDING_REVIEW;
 
     private String rejectionReason;
 
     private String additionalDocsRequested;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reviewer_id")
-    private User reviewer;
+    @DBRef
+        private User reviewer;
 
     private String reviewerNotes;
 

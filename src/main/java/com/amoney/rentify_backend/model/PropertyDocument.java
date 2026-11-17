@@ -1,11 +1,12 @@
 package com.amoney.rentify_backend.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "property_documents")
+@Document(collection = "property_documents")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,19 +15,14 @@ import java.time.LocalDateTime;
 public class PropertyDocument {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property property;
+    @DBRef
+        private Property property;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private DocumentType documentType;
+            private DocumentType documentType;
 
-    @Column(nullable = false)
-    private String blobName;
+        private String blobName;
 
     private String originalFileName;
 

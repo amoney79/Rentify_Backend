@@ -4,9 +4,8 @@ import com.amoney.rentify_backend.model.AuditAction;
 import com.amoney.rentify_backend.model.User;
 import com.amoney.rentify_backend.model.VerificationAuditRecord;
 import com.amoney.rentify_backend.repository.VerificationAuditRecordRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class AuditService {
         this.auditRepository = auditRepository;
     }
 
-    @Transactional
+    @CacheEvict(value = "recentAuditLogs", allEntries = true)
     public VerificationAuditRecord logAudit(
             String entityType,
             Long entityId,

@@ -1,11 +1,12 @@
 package com.amoney.rentify_backend.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "face_verifications")
+@Document(collection = "face_verifications")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,12 +15,10 @@ import java.time.LocalDateTime;
 public class FaceVerification {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "verification_profile_id", nullable = false)
-    private VerificationProfile verificationProfile;
+    @DBRef
+        private VerificationProfile verificationProfile;
 
     private Double faceMatchConfidence;
 
@@ -33,8 +32,7 @@ public class FaceVerification {
 
     private String spoofType; // "PRINT_ATTACK", "VIDEO_REPLAY", "3D_MASK", "NONE"
 
-    @Column(columnDefinition = "TEXT")
-    private String rawApiResponse;
+        private String rawApiResponse;
 
     @Builder.Default
     private LocalDateTime verifiedAt = LocalDateTime.now();

@@ -51,7 +51,11 @@ public class ChatController {
         User currentUser = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new IllegalStateException("User not found"));
 
-        List<String> convIds = chatMessageRepository.findConversationIdsByUserId(currentUser.getId());
+        List<ChatMessage> userMessages = chatMessageRepository.findBySenderIdOrRecipientId(currentUser.getId(), currentUser.getId());
+        Set<String> convIds = userMessages.stream()
+                .map(ChatMessage::getConversationId)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
         List<Map<String, Object>> result = new ArrayList<>();
 
         for (String cId : convIds) {

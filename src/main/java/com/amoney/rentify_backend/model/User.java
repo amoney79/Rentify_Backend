@@ -1,50 +1,51 @@
 package com.amoney.rentify_backend.model;
 
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "users")
+@Document(collection="users")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    
     private String email;
 
-    @Column(nullable = false)
+    
     private String password;
 
-    @Column(nullable = false)
+   
     private String fullName;
 
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    
     @Builder.Default
     private Role role = Role.ROLE_TENANT;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     @Builder.Default
     private IdentityStatus identityStatus = IdentityStatus.UNVERIFIED;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     @Builder.Default
     private AgentStatus agentStatus = AgentStatus.NOT_APPLICABLE;
 
     private String idNumber;
-@Column(name="avatar_Url", length=1000)
+
     private String avatarUrl;
 
     private String county;
@@ -53,14 +54,12 @@ public class User {
 
     private String agencyLicenseNumber;
 
+    @CreatedDate
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @LastModifiedDate
     @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
     }
-}

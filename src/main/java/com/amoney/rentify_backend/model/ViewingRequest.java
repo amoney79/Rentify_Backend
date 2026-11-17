@@ -1,12 +1,13 @@
 package com.amoney.rentify_backend.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "viewing_requests")
+@Document(collection = "viewing_requests")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,32 +16,24 @@ import java.time.LocalDateTime;
 public class ViewingRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property property;
+    @DBRef
+        private Property property;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id", nullable = false)
-    private User tenant;
+    @DBRef
+        private User tenant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "landlord_id", nullable = false)
-    private User landlord;
+    @DBRef
+        private User landlord;
 
-    @Column(nullable = false)
-    private LocalDate viewingDate;
+        private LocalDate viewingDate;
 
-    @Column(nullable = false)
-    private String viewingTime; // e.g. "10:00 AM"
+        private String viewingTime; // e.g. "10:00 AM"
 
     private String notes;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @Builder.Default
+            @Builder.Default
     private ViewingStatus status = ViewingStatus.REQUESTED;
 
     @Builder.Default
@@ -49,8 +42,4 @@ public class ViewingRequest {
     @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
     }
-}

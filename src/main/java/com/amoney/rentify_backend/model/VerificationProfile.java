@@ -1,12 +1,13 @@
 package com.amoney.rentify_backend.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "verification_profiles")
+@Document(collection = "verification_profiles")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,20 +16,15 @@ import java.time.LocalDateTime;
 public class VerificationProfile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @DBRef
+        private User user;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @Builder.Default
+            @Builder.Default
     private IdentityStatus status = IdentityStatus.PENDING;
 
-    @Enumerated(EnumType.STRING)
-    private DocumentType idDocumentType;
+        private DocumentType idDocumentType;
 
     private String idNumber;
 
@@ -67,9 +63,8 @@ public class VerificationProfile {
 
     private String additionalDocsRequested;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reviewer_id")
-    private User reviewer;
+    @DBRef
+        private User reviewer;
 
     private String reviewerNotes;
 

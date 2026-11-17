@@ -1,10 +1,10 @@
 package com.amoney.rentify_backend.repository;
 
 import com.amoney.rentify_backend.model.FaceVerification;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 
-public interface FaceVerificationRepository extends JpaRepository<FaceVerification, Long> {
+public interface FaceVerificationRepository extends MongoRepository<FaceVerification, Long> {
     List<FaceVerification> findByVerificationProfileId(Long profileId);
 }

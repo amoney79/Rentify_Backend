@@ -1,11 +1,12 @@
 package com.amoney.rentify_backend.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "listing_approvals")
+@Document(collection = "listing_approvals")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,23 +15,17 @@ import java.time.LocalDateTime;
 public class ListingApproval {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property property;
+    @DBRef
+        private Property property;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "approved_by_id", nullable = false)
-    private User approvedBy;
+    @DBRef
+        private User approvedBy;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private PropertyVerificationStatus approvalStatus;
+            private PropertyVerificationStatus approvalStatus;
 
-    @Column(columnDefinition = "TEXT")
-    private String remarks;
+        private String remarks;
 
     @Builder.Default
     private LocalDateTime approvedAt = LocalDateTime.now();

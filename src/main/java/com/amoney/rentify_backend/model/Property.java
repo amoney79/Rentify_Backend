@@ -1,12 +1,13 @@
 package com.amoney.rentify_backend.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "properties")
+@Document(collection = "properties")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,18 +16,14 @@ import java.time.LocalDateTime;
 public class Property {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "landlord_id", nullable = false)
-    private User landlord;
+    @DBRef
+        private User landlord;
 
-    @Column(nullable = false)
-    private String title;
+        private String title;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+        private String description;
 
     private String propertyType; // "Apartment", "Villa", "Bedsitter", "Mansion"
 
@@ -44,13 +41,10 @@ public class Property {
 
     private String imageUrl;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @Builder.Default
+            @Builder.Default
     private PropertyVerificationStatus verificationStatus = PropertyVerificationStatus.UNVERIFIED;
 
-    @Column(nullable = false)
-    @Builder.Default
+        @Builder.Default
     private Boolean isPubliclyVisible = false;
 
     @Builder.Default
@@ -59,8 +53,4 @@ public class Property {
     @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
     }
-}

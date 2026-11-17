@@ -1,11 +1,12 @@
 package com.amoney.rentify_backend.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "verification_audit_records")
+@Document(collection = "verification_audit_records")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,30 +15,22 @@ import java.time.LocalDateTime;
 public class VerificationAuditRecord {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        private Long id;
 
-    @Column(nullable = false)
-    private String entityType; // "IDENTITY", "PROPERTY_OWNERSHIP", "LISTING"
+        private String entityType; // "IDENTITY", "PROPERTY_OWNERSHIP", "LISTING"
 
-    @Column(nullable = false)
-    private Long entityId;
+        private Long entityId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "performed_by_id")
-    private User performedBy; // Can be null if system-generated
+    @DBRef
+        private User performedBy; // Can be null if system-generated
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private AuditAction action;
+            private AuditAction action;
 
-    @Column(columnDefinition = "TEXT")
-    private String notes;
+        private String notes;
 
     private Double confidenceScore;
 
-    @Column(columnDefinition = "TEXT")
-    private String metadataJson;
+        private String metadataJson;
 
     @Builder.Default
     private LocalDateTime timestamp = LocalDateTime.now();
