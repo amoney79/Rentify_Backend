@@ -118,5 +118,25 @@
     "name": "spring.h2.console.enabled",
     "type": "java.lang.String",
     "description": "A description for 'spring.h2.console.enabled'"
+  },
+  {
+    "name": "spring.data.mongodb.auto-index-creation",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.data.mongodb.auto-index-creation'"
+  },
+  {
+    "name": "spring.data.rediis.host",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.data.rediis.host'"
+  },
+  {
+    "name": "spring.cache.type",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cache.type'"
+  },
+  {
+    "name": "spring.cache.redis.time-to-live",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cache.redis.time-to-live'"
   }
 ]}
