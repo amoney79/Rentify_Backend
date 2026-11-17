@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User implements Serializable {
+public class User implements Serializable, MongoIdentifiable {
 
     private static final long serialVersionUID = 1L;
 

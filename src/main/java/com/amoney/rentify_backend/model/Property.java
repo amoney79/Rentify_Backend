@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Property {
+public class Property implements MongoIdentifiable {
 
     @Id
         private Long id;

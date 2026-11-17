@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VerificationAuditRecord {
+public class VerificationAuditRecord implements MongoIdentifiable {
 
     @Id
         private Long id;

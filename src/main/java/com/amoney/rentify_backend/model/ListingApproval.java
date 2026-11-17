@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ListingApproval {
+public class ListingApproval implements MongoIdentifiable {
 
     @Id
         private Long id;

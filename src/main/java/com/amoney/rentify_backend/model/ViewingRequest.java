@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ViewingRequest {
+public class ViewingRequest implements MongoIdentifiable {
 
     @Id
         private Long id;
