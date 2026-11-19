@@ -39,11 +39,15 @@ public class PaymentController {
             String response = paymentService.initiateStkPush(request.getPhoneNumber(), request.getAmount());
             return ResponseEntity.ok(response);
 
-            //Extract CheckoutRequestID from KCB'S JSON response to match the callback
+            // Extract CheckoutRequestID from KCB's JSON response to match the callback later
             String reference = "MPESA-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-            try{
+            try {
                 JsonNode root = objectMapper.readTree(response);
-            }
+                if (root.has("response") && root.get("response").has("CheckoutRequestID")) {
+                    reference = root.get("response").get("CheckoutRequestID").asText();
+                } else if (root.has("CheckoutRequestID")) {
+                    reference = root.get("CheckoutRequestID").asText();
+                }
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Payment failed: " + e.getMessage());
         }
