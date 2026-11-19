@@ -1,12 +1,13 @@
 package com.amoney.rentify_backend.repository;
 
-public class PaymentRepository {
+import java.util.Optional;
 
-    @Repository
-    public interface PaymentRepository extends MongoRepository<Payment, String> {
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-        //Finds a paymentt document by its reference or checkoutRequestID
-        Optional<Payment> findByReference(String refference) ;
-    }
-    
+@Repository
+public interface PaymentRepository extends MongoRepository<Payment, String> {
+
+    // Finds a payment document by its reference.
+    Optional<Payment> findByReference(String reference);
 }
