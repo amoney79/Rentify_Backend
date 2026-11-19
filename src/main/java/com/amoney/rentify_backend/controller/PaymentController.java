@@ -32,6 +32,9 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final ObjectMapper objectMapper;
 
+    //Initialize ObjectMapper directly here
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     public PaymentController(
             PaymentService paymentService,
             PaymentRepository paymentRepository,
