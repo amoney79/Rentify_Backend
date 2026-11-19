@@ -44,7 +44,7 @@ public class PaymentService {
         return response.getBody().get("access_token").toString();
     }
     //Trigger STK Push
-    public String iinitiateStkPush(String phoneNumber, double amount) {
+    public String initiateStkPush(String phoneNumber, double amount) {
         String token = getAccessToken();
 
         HttpHeaders headers = new HttpHeaders();
