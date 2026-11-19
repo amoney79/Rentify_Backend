@@ -1,6 +1,7 @@
 package com.amoney.rentify_backend.controller;
 
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,7 @@ public class PaymentController {
                     reference = root.get("CheckoutRequestID").asText();
                 }
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Payment failed: " + e.getMessage());
-        }
+        
         //fallback to generated UUID if KCB response format
     }
 
@@ -64,6 +64,25 @@ public class PaymentController {
     response.put("status","PENDING");
     response.put("reference",reference);
     response.put("response", reference);
+
+    return ResponseEntity.ok(response);
+
+}catch (Exception e) {
+    Map<String, Object> error = new HashMap<>();
+    error.put("status","FAILED");
+    error.put("message", e.getMessage());
+    return ResponseEntity.status(500).body(error);
+    }
+}
+
+//Process Card Payment and Save CPMLETED Record to DB
+@PostMapping("/card")
+public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<String, Object> cardRequest) {
+    try{
+        String txId = "VISA-" + UUID.randomUUID().toString(0, 8).ttoUpperCase();
+        String amount = cardRequest.getOrDefault("amount", "0").toString();
+    }
+}
 
 
 
