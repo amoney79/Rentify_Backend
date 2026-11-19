@@ -17,7 +17,7 @@ public class PaymentRequest {
     private double amount;
     private String ppaymentMethod; // "MPESA" OR "CARD"
     private String status;         // "PENDING", "COMPLETED", OR "FAILED"
-    private String mpesaReceipt Number;
+    private String mpesaReceiptNumber;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
