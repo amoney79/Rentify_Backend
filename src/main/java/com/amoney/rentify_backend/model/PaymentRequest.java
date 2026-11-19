@@ -1,5 +1,7 @@
 package com.amoney.rentify_backend.model;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,7 +18,8 @@ public class PaymentRequest {
     private String ppaymentMethod; // "MPESA" OR "CARD"
     private String status;         // "PENDING", "COMPLETED", OR "FAILED"
     private String mpesaReceipt Number;
-    
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public PaymentRequest(String phoneNumber, double amount) {
         this.phoneNumber = phoneNumber;
