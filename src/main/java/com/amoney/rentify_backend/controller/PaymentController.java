@@ -55,7 +55,7 @@ public class PaymentController {
     }
 
     //save transaction to database
-    PaymentRequest payment = new PaymentRequest(reference. request.getPhoneNumber(), request.getAmount(), "MPESA")
+    PaymentRequest payment = new PaymentRequest(reference. request.getPhoneNumber(), request.getAmount(), "MPESA", "PENDING");
     
     @PostMapping("/callback")
     public ResponseEntity<String> handleCallback(@RequestBody String callbackData) {
