@@ -158,7 +158,10 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
             PaymentRequest payment = optionalPayment.get();
             response.put("status", payment.getStatus());
             response.put("receiptNumber", payment.getMpesaReceiptNumber());
+        }else {
+            response.put("status","NOT_FOUND");
         }
+        return ResponseEntity.ok(response);
     }
     
 }
