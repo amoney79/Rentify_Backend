@@ -1,169 +1,184 @@
 package com.amoney.rentify_backend.controller;
 
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import org.apache.el.stream.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.amoney.rentify_backend.model.PaymentRequest;
+import com.amoney.rentify_backend.repository.PaymentRepository;
+import com.amoney.rentify_backend.service.PaymentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 
-import com.amoney.rentify_backend.model.PaymentRequest;
-import com.amoney.rentify_backend.repository.PaymentRepository;
-import com.amoney.rentify_backend.service.PaymentService;
-import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/payments")
-@CrossOrigin(origins = "*") //Allows my Fontend to call this APIy
-    
 public class PaymentController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
+
     private final PaymentRepository paymentRepository;
-    @Autowired
-    private  PaymentService paymentService;
+    private final PaymentService paymentService;
+    private final ObjectMapper objectMapper;
 
-    //Temporary in-memory stotre for payment statuses(replace)
-
-
-    PaymentController(PaymentService paymentService, PaymentRepository paymentRepository) {
+    public PaymentController(
+            PaymentService paymentService,
+            PaymentRepository paymentRepository,
+            ObjectMapper objectMapper) {
         this.paymentService = paymentService;
         this.paymentRepository = paymentRepository;
+        this.objectMapper = objectMapper;
     }
 
-
-    //Initiate M-Pesa STK Push and Save PENDING Record to DB
     @PostMapping("/pay")
-    public ResponseEntity<String> makePayment(@RequestBody PaymentRequest request) {
-        try{
-            String response = paymentService.initiateStkPush(request.getPhoneNumber(), request.getAmount());
-            return ResponseEntity.ok(response);
+    public ResponseEntity<Map<String, Object>> makePayment(@RequestBody PaymentRequest request) {
+        if (request == null || !Double.isFinite(request.getAmount()) || request.getAmount() <= 0) {
+            return error(HttpStatus.BAD_REQUEST, "Enter a valid payment amount.");
+        }
 
-            // Extract CheckoutRequestID from KCB's JSON response to match the callback later
-            String reference = "MPESA-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-            try {
-                JsonNode root = objectMapper.readTree(response);
-                if (root.has("response") && root.get("response").has("CheckoutRequestID")) {
-                    reference = root.get("response").get("CheckoutRequestID").asText();
-                } else if (root.has("CheckoutRequestID")) {
-                    reference = root.get("CheckoutRequestID").asText();
-                }
-        } catch (Exception e) {
-        
-        //fallback to generated UUID if KCB response format
+        String phoneNumber = normalizeKenyanPhoneNumber(request.getPhoneNumber());
+        if (phoneNumber == null) {
+            return error(HttpStatus.BAD_REQUEST, "Enter a valid Kenyan M-Pesa phone number.");
+        }
+
+        try {
+            String providerResponse = paymentService.initiateStkPush(phoneNumber, request.getAmount());
+            JsonNode responseJson = objectMapper.readTree(providerResponse);
+            String reference = findCheckoutReference(responseJson);
+            if (reference == null || reference.isBlank()) {
+                logger.warn("Payment provider response did not contain a checkout reference");
+                return error(HttpStatus.BAD_GATEWAY, "The payment provider did not confirm the request.");
+            }
+
+            PaymentRequest payment = new PaymentRequest();
+            payment.setReference(reference);
+            payment.setPhoneNumber(phoneNumber);
+            payment.setAmount(request.getAmount());
+            payment.setPaymentMethod("MPESA");
+            payment.setStatus("PENDING");
+            paymentRepository.save(payment);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "PENDING");
+            response.put("reference", reference);
+            response.put("message", "Payment request sent. Check your phone to complete it.");
+            return ResponseEntity.accepted().body(response);
+        } catch (RestClientException exception) {
+            logger.error("Could not initiate M-Pesa payment with the configured provider", exception);
+            return error(HttpStatus.BAD_GATEWAY, "Could not reach the payment provider. Please try again.");
+        } catch (JsonProcessingException exception) {
+            logger.error("Payment provider returned an invalid response", exception);
+            return error(HttpStatus.BAD_GATEWAY, "The payment provider returned an invalid response.");
+        }
     }
 
-    //save transaction to database
-    PaymentRequest payment = new PaymentRequest(reference. request.getPhoneNumber(), request.getAmount(), "MPESA", "PENDING");
-    PaymentRepository.save(payment);
-    
-
-    Map<String, Object> response = new HashMap<>();
-    response.put("status","PENDING");
-    response.put("reference",reference);
-    response.put("response", reference);
-
-    return ResponseEntity.ok(response);
-
-}catch (Exception e) {
-    Map<String, Object> error = new HashMap<>();
-    error.put("status","FAILED");
-    error.put("message", e.getMessage());
-    return ResponseEntity.status(500).body(error);
+    @PostMapping("/card")
+    public ResponseEntity<Map<String, Object>> makeCardPayment() {
+        return error(HttpStatus.NOT_IMPLEMENTED, "Card payments are not configured yet.");
     }
-}
 
-//Process Card Payment and Save CPMLETED Record to DB
-@PostMapping("/card")
-public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<String, Object> cardRequest) {
-    try{
-        String txId = "VISA-" + UUID.randomUUID().toString(0, 8).ttoUpperCase();
-        String amount = cardRequest.getOrDefault("amount", "0").toString();
-
-        PaymentRequest payment = new PaymentRequest(txId, "CARD_USER", amount, "CARD", "COMMPLETED");
-        PaymentRepository.save(payment);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "SUCCESS");
-        response.put("transactionId", txId);
-        return ResponseEntity.ok(response);
-    } catch (Exception e) {
-        Map<String, Object> error = new HashMap<>();
-        error.put("status", "FAILED");
-        error.put("message", "Card payment failed: " + e.getMessage());
-        retturn ResponseEntity.sttatus(500).body(error);
-    }
-}
-
-//Receive Asynchronous KCB callback and update Database status
     @PostMapping("/callback")
-    public ResponseEntity<String> handleCallback(@RequestBody String callbackData) {
-        // KCB sends the payment confirmation JSON here
-        System.out.println("KCB callback Received: " + callbackData);
-        
-        try{
-            JsonNode root = objectMapper.readTree(callbackData);
-            JsonNode stkCallback root.path("Body").path("stkCallback");
+    public ResponseEntity<Map<String, Object>> handleCallback(@RequestBody String callbackData) {
+        final JsonNode callback;
+        try {
+            callback = objectMapper.readTree(callbackData);
+        } catch (JsonProcessingException exception) {
+            logger.warn("Received an invalid payment callback", exception);
+            return error(HttpStatus.BAD_REQUEST, "Invalid payment callback.");
+        }
 
-            if(!stkCallback.isMissingNode()) {
-                String checkoutRequestId = stkCallback.path("checkoutRequestID").asText();
-                int resultCode = stkCallback.path("ResultCode").asInt(-1);
+        JsonNode stkCallback = callback.path("Body").path("stkCallback");
+        String reference = firstText(stkCallback, "CheckoutRequestID", "checkoutRequestID", "checkoutRequestId");
+        if (reference == null) {
+            return error(HttpStatus.BAD_REQUEST, "Payment callback is missing its checkout reference.");
+        }
 
-                Optional<PaymentRequest> optionalPayment = PaymentRepository.findByReference(checkoutRequestId);
-                if(optionalPayment.isPresent()) {
-                    PaymentRequest payment = optionalPayment.get();
+        Optional<PaymentRequest> existingPayment = paymentRepository.findByReference(reference);
+        if (existingPayment.isPresent()) {
+            PaymentRequest payment = existingPayment.get();
+            int resultCode = stkCallback.path("ResultCode").asInt(stkCallback.path("resultCode").asInt(-1));
+            payment.setStatus(resultCode == 0 ? "COMPLETED" : "FAILED");
 
-                    if(resultCode == 0) {
-                        payment.setStatus("COMPLETED");
-
-                        //Extract M-PESA Receipt Number from callbackMetadata
-                        JsonNode items = stkCallback.patth("CallbackMetadata").path("Item");
-                        for(JsonNode item :items) {
-                            if("MpesaReceiptNumber".equals(ittems.path("Name").asText())){
-                                payment.setMpesaReceiptNumber(item.path("value").asText());
-                            }
-                        }
-                    } else {
-                        payment.setStatus("FAILED");
+            if (resultCode == 0) {
+                JsonNode items = stkCallback.path("CallbackMetadata").path("Item");
+                for (JsonNode item : items) {
+                    if ("MpesaReceiptNumber".equals(firstText(item, "Name", "name"))) {
+                        payment.setMpesaReceiptNumber(firstText(item, "Value", "value"));
+                        break;
                     }
-                paymentRepository.save(payment);
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Error parsing KCB callback:" + e.getMessage());
+            paymentRepository.save(payment);
+        } else {
+            logger.warn("Received payment callback for unknown checkout reference {}", reference);
         }
-        return ResponseEntity.ok("Callback processed");
+
+        return ResponseEntity.ok(Map.of("message", "Callback processed."));
     }
 
-    //Poll Payment Status from Database
-    @GetMapping("/status/{reference}")  
-    public RespoonseEntity<Map<String, Object> getPaymentSttatus(@PathVariable String reference) {
-        Optional<PaymentRequest> optionalPayment = paymentRepository.findByReference(reference);
-        
+    @GetMapping("/status/{reference}")
+    public ResponseEntity<Map<String, Object>> getPaymentStatus(@PathVariable String reference) {
         Map<String, Object> response = new HashMap<>();
-        response.put("reference",reference);
+        response.put("reference", reference);
 
-        if(optionalPayment.isPresent()) {
-            PaymentRequest payment = optionalPayment.get();
-            response.put("status", payment.getStatus());
-            response.put("receiptNumber", payment.getMpesaReceiptNumber());
-        }else {
-            response.put("status","NOT_FOUND");
-        }
+        paymentRepository.findByReference(reference).ifPresentOrElse(
+                payment -> {
+                    response.put("status", payment.getStatus());
+                    response.put("receiptNumber", payment.getMpesaReceiptNumber());
+                },
+                () -> response.put("status", "NOT_FOUND")
+        );
         return ResponseEntity.ok(response);
     }
-    
+
+    private ResponseEntity<Map<String, Object>> error(HttpStatus status, String message) {
+        return ResponseEntity.status(status).body(Map.of("status", "FAILED", "message", message));
+    }
+
+    private String normalizeKenyanPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null) {
+            return null;
+        }
+
+        String digits = phoneNumber.replaceAll("\\D", "");
+        if (digits.startsWith("0") && digits.length() == 10) {
+            digits = digits.substring(1);
+        } else if (digits.startsWith("254") && digits.length() == 12) {
+            digits = digits.substring(3);
+        }
+
+        return digits.matches("[17]\\d{8}") ? "254" + digits : null;
+    }
+
+    private String findCheckoutReference(JsonNode response) {
+        JsonNode reference = response.findValue("CheckoutRequestID");
+        if (reference == null) {
+            reference = response.findValue("checkoutRequestID");
+        }
+        if (reference == null) {
+            reference = response.findValue("checkoutRequestId");
+        }
+        return reference != null && reference.isValueNode() ? reference.asText() : null;
+    }
+
+    private String firstText(JsonNode node, String... fieldNames) {
+        for (String fieldName : fieldNames) {
+            JsonNode value = node.get(fieldName);
+            if (value != null && !value.isNull() && !value.asText().isBlank()) {
+                return value.asText();
+            }
+        }
+        return null;
+    }
 }
-
-

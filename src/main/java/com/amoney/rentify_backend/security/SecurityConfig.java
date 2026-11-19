@@ -65,6 +65,12 @@ public class SecurityConfig {
                     "/data/storage/**"
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/properties/public/**", "/api/properties").permitAll()
+                .requestMatchers(HttpMethod.POST,
+                    "/api/payments/pay",
+                    "/api/payments/card",
+                    "/api/payments/callback"
+                ).permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/payments/status/**").permitAll()
                 .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "VERIFICATION_OFFICER")
                 .anyRequest().authenticated()
             )

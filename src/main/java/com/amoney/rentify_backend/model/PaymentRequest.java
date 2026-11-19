@@ -23,12 +23,12 @@ public class PaymentRequest {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public PaymentRequest(String phoneNumber, double amount, String paymentMethod, String reference, String status) {
+    public PaymentRequest(String reference, String phoneNumber, double amount, String paymentMethod, String status) {
+        this.reference = reference;
         this.phoneNumber = phoneNumber;
         this.amount = amount;
         this.paymentMethod = paymentMethod;
         this.status = status;
-        this.mpesaReceiptNumber = mpesaReceiptNumber;
     }
     //Generate Getters and Setters
     public PaymentRequest() {
@@ -61,6 +61,14 @@ public class PaymentRequest {
     }
     public void setReference(String Reference) {
         this.reference = reference;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public String getStatus(){
