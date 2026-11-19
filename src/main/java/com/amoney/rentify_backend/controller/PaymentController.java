@@ -112,7 +112,17 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
                 String checkoutRequestId = stkCallback.path("checkoutRequestID").asText();
                 int resultCode = stkCallback.path("ResultCode").asInt(-1);
 
-                Optional<PaymentRequest> optionalPayment = paymentRepository.findByReference(checkoutRequestId);
+                Optional<PaymentRequest> optionalPayment = PaymentRepository.findByReference(checkoutRequestId);
+                if(optionalPayment.isPresent()) {
+                    PaymentRequest payment = optionalPayment.get();
+
+                    if(resultCode == 0) {
+                        payment.setStatus("COMPLETED");
+
+                        //Extract M-PESA Receipt Number from callbackMetadata
+                        JsonNode items = stkCallback.patth("CallbackMetadata")
+                    }
+                }
 
             }
         }
