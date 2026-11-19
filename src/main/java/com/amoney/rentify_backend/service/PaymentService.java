@@ -61,7 +61,10 @@ public class PaymentService {
         payload.put("callbackUrl",callbackUrl);
         payload.put("transactionDescription","Order Payment");
 
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity(stkUrl, request, String.class);
 
+        return response.getBody();
 
     }
 
