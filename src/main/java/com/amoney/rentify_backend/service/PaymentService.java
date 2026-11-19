@@ -6,6 +6,7 @@ import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -35,7 +36,7 @@ public class PaymentService {
         body.add("grant_type", "client_credentials");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
-        
+        ResponseEntity<Map> response = setTemplate.postForEntity(tokenUrl, request, Map.class);
         
     }
 
