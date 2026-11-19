@@ -85,6 +85,16 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
 
         PaymentRequest payment = new PaymentRequest(txId, "CARD_USER", amount, "CARD", "COMMPLETED");
         PaymentRepository.save(payment);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "SUCCESS");
+        response.put("transactionId", txId);
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("status", "FAILED");
+        error.put("message", "Card payment failed: " + e.getMessage());
+        retturn ResponseEntity.sttatus(500).body(error);
     }
 }
 
