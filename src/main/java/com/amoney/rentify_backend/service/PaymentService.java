@@ -15,7 +15,8 @@ public class PaymentService {
 
     //Get OAuth Access Token
     public String getAccessToken() {
-        String auth = consumerKey + ":" + consumerSecret; 
+        String auth = consumerKey + ":" + consumerSecret;
+        String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes()); 
     }
 
     
