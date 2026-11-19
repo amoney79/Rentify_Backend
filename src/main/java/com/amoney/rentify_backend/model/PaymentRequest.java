@@ -72,4 +72,7 @@ public class PaymentRequest {
     public String getMpesaReceiptNumber() {
         return mpesaReceiptNumber;
     }
+    public void setMpesaReceiptNumber(String mpesaReceiptNumber) {
+        this.mpesaReceiptNumber = mpesaReceiptNumber;
+    }
 }
