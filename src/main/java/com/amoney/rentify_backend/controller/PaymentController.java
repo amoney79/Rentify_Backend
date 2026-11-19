@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,8 +57,17 @@ public class PaymentController {
 
     //save transaction to database
     PaymentRequest payment = new PaymentRequest(reference. request.getPhoneNumber(), request.getAmount(), "MPESA", "PENDING");
-    paymentRepository.save(payment);
+    PaymentRepository.save(payment);
     
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("status","PENDING");
+    response.put("reference",reference);
+
+
+
+
+
     @PostMapping("/callback")
     public ResponseEntity<String> handleCallback(@RequestBody String callbackData) {
         // KCB sends the payment confirmation JSON here
