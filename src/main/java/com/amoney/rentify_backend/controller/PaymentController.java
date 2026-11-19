@@ -112,6 +112,8 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
                 String checkoutRequestId = stkCallback.path("checkoutRequestID").asText();
                 int resultCode = stkCallback.path("ResultCode").asInt(-1);
 
+                Optional<PaymentRequest> optionalPayment = paymentRepository.findByReference(checkoutRequestId);
+
             }
         }
     }
