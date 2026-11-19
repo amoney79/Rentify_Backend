@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amoney.rentify_backend.model.PaymentRequest;
+import com.amoney.rentify_backend.repository.PaymentRepository;
 import com.amoney.rentify_backend.service.PaymentService;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -81,6 +82,9 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
     try{
         String txId = "VISA-" + UUID.randomUUID().toString(0, 8).ttoUpperCase();
         String amount = cardRequest.getOrDefault("amount", "0").toString();
+
+        PaymentRequest payment = new PaymentRequest(txId, "CARD_USER", amount, "CARD", "COMMPLETED");
+        PaymentRepository.save(payment);
     }
 }
 
