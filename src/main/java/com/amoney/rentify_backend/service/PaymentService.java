@@ -54,7 +54,7 @@ public class PaymentService {
         Map<String, Object> payload = new HashMap<>();
         payload.put("phoneNumber", phoneNumber);
         payload.put("amount", amount);
-        
+        payload.put("invoiceNumber", "INV-" + System.currentTimeMillis()); //Unique reference
 
 
 
