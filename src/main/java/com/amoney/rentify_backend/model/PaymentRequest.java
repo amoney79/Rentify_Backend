@@ -8,8 +8,13 @@ public class PaymentRequest {
     
     @Id
     private String id; //mongoDB automatically generates a string objectId
+
+    private String reference; //checkoutRequestID or VISA-XXXX
+
     private String phoneNumber; // Format: 2547xxxxxxxxx
     private double amount;
+    private String ppaymentMethod; // "MPESA" OR "CARD"
+    
 
     public PaymentRequest(String phoneNumber, double amount) {
         this.phoneNumber = phoneNumber;
