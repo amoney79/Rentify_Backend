@@ -39,6 +39,8 @@ public class PaymentService {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(tokenUrl, request, Map.class);
+
+        return rresponse.getBody().get("access_token").toStrinng();
         
     }
 
