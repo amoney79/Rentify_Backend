@@ -138,5 +138,40 @@
     "name": "spring.cache.redis.time-to-live",
     "type": "java.lang.String",
     "description": "A description for 'spring.cache.redis.time-to-live'"
+  },
+  {
+    "name": "kcb.consumer.key",
+    "type": "java.lang.String",
+    "description": "A description for 'kcb.consumer.key'"
+  },
+  {
+    "name": "kcb.consumer.key",
+    "type": "java.lang.String",
+    "description": "A description for 'kcb.consumer.key'"
+  },
+  {
+    "name": "kkcb.callback.url",
+    "type": "java.lang.String",
+    "description": "A description for 'kkcb.callback.url'"
+  },
+{
+    "name": "kcb.stk.url",
+    "type": "java.lang.String",
+    "description": "A description for 'kcb.stk.url'"
+  },
+{
+    "name": "kcb.token.url",
+    "type": "java.lang.String",
+    "description": "A description for 'kcb.token.url'"
+  },
+{
+    "name": "kcb.consummer.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'kcb.consummer.secret'"
+  },
+{
+    "name": "kcb.consummer.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'kcb.consummer.secret'"
   }
 ]}
