@@ -1,9 +1,11 @@
 package com.amoney.rentify_backend.controller;
 
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
@@ -147,7 +149,16 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
     //Poll Payment Status from Database
     @GetMapping("/status/{reference}")  
     public RespoonseEntity<Map<String, Object> getPaymentSttatus(@PathVariable String reference) {
-        return new String();
+        Optional<PaymentRequest> optionalPayment = paymentRepository.findByReference(reference);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("reference",reference);
+
+        if(optionalPayment.isPresent()) {
+            PaymentRequest payment = optionalPayment.get();
+            response.put("status", payment.getStatus());
+            response.put("receiptNumber", payment.getMpesaReceiptNumber());
+        }
     }
     
 }
