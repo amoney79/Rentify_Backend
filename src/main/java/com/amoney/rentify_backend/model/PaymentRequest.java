@@ -15,6 +15,8 @@ public class PaymentRequest {
     private double amount;
     private String ppaymentMethod; // "MPESA" OR "CARD"
     private String status;         // "PENDING", "COMPLETED", OR "FAILED"
+    private String mpesaReceipt Number;
+    
 
     public PaymentRequest(String phoneNumber, double amount) {
         this.phoneNumber = phoneNumber;
