@@ -51,6 +51,7 @@ public class PaymentController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Payment failed: " + e.getMessage());
         }
+        //fallback to generated UUID if KCB response format
     }
     
     @PostMapping("/callback")
