@@ -17,6 +17,10 @@ import com.amoney.rentify_backend.model.PaymentRequest;
 import com.amoney.rentify_backend.repository.PaymentRepository;
 import com.amoney.rentify_backend.service.PaymentService;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/payments")
@@ -137,7 +141,15 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
         } catch (Exception e) {
             System.out.println("Error parsing KCB callback:" + e.getMessage());
         }
+        return ResponseEntity.ok("Callback processed");
     }
+
+    //Poll Payment Status from Database
+    @GetMapping("/status/{reference}")  
+    public RespoonseEntity<Map<String, Object> getPaymentSttatus(@PathVariable String reference) {
+        return new String();
+    }
+    
 }
 
 
