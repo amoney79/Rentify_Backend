@@ -58,7 +58,8 @@ public class PaymentService {
         payload.put("sharedShortCode", true);
         payload.put("orgShortCode","");
         payload.put("orgPassKey","");
-        
+        payload.put("callbackUrl",callbackUrl);
+        payload.put("transactionDescription","Order Payment");
 
 
 
