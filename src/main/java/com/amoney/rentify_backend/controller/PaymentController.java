@@ -98,15 +98,19 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
     }
 }
 
-
-
-
-
+//Receive Asynchronous KCB callback and update Database status
     @PostMapping("/callback")
     public ResponseEntity<String> handleCallback(@RequestBody String callbackData) {
         // KCB sends the payment confirmation JSON here
         System.out.println("KCB callback Received: " + callbackData);
-        //parse JSON and update your database order status to PAID
-        return ResponseEntity.ok("Received");
+        
+        try{
+            JsonNode root = objectMapper.readTree(callbackData);
+            JsonNode stkCallback root.path("Body").path("stkCallback");
+
+            
+        }
     }
 }
+
+
