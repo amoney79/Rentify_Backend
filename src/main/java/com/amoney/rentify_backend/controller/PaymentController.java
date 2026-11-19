@@ -108,7 +108,10 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
             JsonNode root = objectMapper.readTree(callbackData);
             JsonNode stkCallback root.path("Body").path("stkCallback");
 
-            
+            if(!stkCallback.isMissingNode()) {
+                String checkoutRequestId = stkCallback.path("checkoutRequestID").asText();
+
+            }
         }
     }
 }
