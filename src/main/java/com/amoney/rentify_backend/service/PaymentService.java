@@ -3,6 +3,7 @@ package com.amoney.rentify_backend.service;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -29,7 +30,7 @@ public class PaymentService {
     @SuppressWarnings("rawtypes")
     public String getAccessToken() {
         String auth = consumerKey + ":" + consumerSecret;
-        String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes()); 
+        String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -41,7 +42,12 @@ public class PaymentService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(tokenUrl, request, Map.class);
 
-        return response.getBody().get("access_token").toString();
+        Map responseBody = response.getBody();
+        Object accessToken = responseBody != null ? responseBody.get("access_token") : null;
+        if (accessToken == null || accessToken.toString().isBlank()) {
+            throw new IllegalStateException("Payment provider did not return an access token");
+        }
+        return accessToken.toString();
     }
     //Trigger STK Push
     public String initiateStkPush(String phoneNumber, double amount) {
@@ -64,6 +70,9 @@ public class PaymentService {
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
         ResponseEntity<String> response = restTemplate.postForEntity(stkUrl, request, String.class);
 
+        if (response.getBody() == null || response.getBody().isBlank()) {
+            throw new IllegalStateException("Payment provider returned an empty STK response");
+        }
         return response.getBody();
 
     }

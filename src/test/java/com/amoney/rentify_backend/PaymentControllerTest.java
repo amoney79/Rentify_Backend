@@ -81,4 +81,18 @@ class PaymentControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         verifyNoInteractions(paymentService, paymentRepository);
     }
+
+    @Test
+    void makePaymentDoesNotStoreARequestWithoutProviderCheckoutReference() {
+        PaymentRequest request = new PaymentRequest();
+        request.setPhoneNumber("0712345678");
+        request.setAmount(1500);
+        when(paymentService.initiateStkPush("254712345678", 1500))
+                .thenReturn("{\"message\":\"Request was not accepted\"}");
+
+        ResponseEntity<Map<String, Object>> response = controller.makePayment(request);
+
+        assertEquals(HttpStatus.BAD_GATEWAY, response.getStatusCode());
+        verifyNoInteractions(paymentRepository);
+    }
 }

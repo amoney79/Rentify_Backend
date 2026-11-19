@@ -59,7 +59,7 @@ public class PaymentController {
                 return error(HttpStatus.BAD_GATEWAY, "The payment provider returned an empty response.");
             }
             JsonNode responseJson = objectMapper.readTree(providerResponse);
-            String reference = findCheckoutReference(responseJson);
+            String reference = responseJson != null ? findCheckoutReference(responseJson) : null;
             if (reference == null || reference.isBlank()) {
                 logger.warn("Payment provider response did not contain a checkout reference");
                 return error(HttpStatus.BAD_GATEWAY, "The payment provider did not confirm the request.");
@@ -105,6 +105,9 @@ public class PaymentController {
             return error(HttpStatus.BAD_REQUEST, "Invalid payment callback.");
         }
 
+        if (callback == null) {
+            return error(HttpStatus.BAD_REQUEST, "Invalid payment callback.");
+        }
         JsonNode stkCallback = callback.path("Body").path("stkCallback");
         String reference = firstText(stkCallback, "CheckoutRequestID", "checkoutRequestID", "checkoutRequestId");
         if (reference == null) {
