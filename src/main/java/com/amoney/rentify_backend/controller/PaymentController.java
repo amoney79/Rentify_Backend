@@ -26,6 +26,11 @@ public class PaymentController {
         }
     }
     
+    @PostMapping("/callback")
+    public ResponseEntity<String> handleCallback(@RequestBody String callbackData) {
+        // KCB sends the payment confirmation JSON here
+        System.out.println("KCB callback Received: " + callbackData);
+    }
     
     
 }
