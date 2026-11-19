@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amoney.rentify_backend.model.PaymentRequest;
 import com.amoney.rentify_backend.service.PaymentService;
+import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 @RequestMapping("/api/payments")
@@ -40,6 +41,9 @@ public class PaymentController {
 
             //Extract CheckoutRequestID from KCB'S JSON response to match the callback
             String reference = "MPESA-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+            try{
+                JsonNode root = objectMapper.readTree(response);
+            }
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Payment failed: " + e.getMessage());
         }
