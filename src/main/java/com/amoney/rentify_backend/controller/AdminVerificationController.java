@@ -18,7 +18,9 @@ public class AdminVerificationController {
 
     private final OwnershipVerificationRepository ownershipRepository;
     private final VerificationProfileRepository profileRepository;
+    @SuppressWarnings("unused")
     private final PropertyRepository propertyRepository;
+    @SuppressWarnings("Unused")
     private final PropertyDocumentRepository documentRepository;
     private final UserRepository userRepository;
     private final VerificationWorkflowService workflowService;
