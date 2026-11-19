@@ -133,8 +133,9 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
                     }
                 paymentRepository.save(payment);
                 }
-
             }
+        } catch (Exception e) {
+            System.out.println("Error parsing KCB callback:" + e.getMessage());
         }
     }
 }
