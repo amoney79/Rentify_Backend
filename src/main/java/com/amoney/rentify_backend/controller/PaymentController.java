@@ -14,7 +14,12 @@ import com.amoney.rentify_backend.service.PaymentService;
 public class PaymentController {
 
     @Autowired
-    private PaymentService paymentService;
+    private  PaymentService paymentService;
+
+
+    PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
 
 
     @PostMapping("/pay")
