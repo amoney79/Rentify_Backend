@@ -53,6 +53,9 @@ public class PaymentController {
         }
         //fallback to generated UUID if KCB response format
     }
+
+    //save transaction to database
+    PaymentRequest payment = new PaymentRequest(reference. request.getPhoneNumber(), request.getAmount(), "MPESA")
     
     @PostMapping("/callback")
     public ResponseEntity<String> handleCallback(@RequestBody String callbackData) {
