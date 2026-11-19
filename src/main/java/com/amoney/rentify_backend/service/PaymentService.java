@@ -1,7 +1,13 @@
 package com.amoney.rentify_backend.service;
 
+import javax.print.attribute.standard.Media;
+
+import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
+
+import io.netty.handler.codec.base64.Base64;
 
 public class PaymentService {
 
@@ -17,6 +23,13 @@ public class PaymentService {
     public String getAccessToken() {
         String auth = consumerKey + ":" + consumerSecret;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes()); 
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FROM_URLENCODED);
+        headers.set("Authorization", "Basic " + encodedAuth);
+
+        
+        
     }
 
     
