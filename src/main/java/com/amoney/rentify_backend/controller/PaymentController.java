@@ -121,6 +121,11 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
 
                         //Extract M-PESA Receipt Number from callbackMetadata
                         JsonNode items = stkCallback.patth("CallbackMetadata").path("Item");
+                        for(JsonNode item :items) {
+                            if("MpesaReceiptNumber".equals(ittems.path("Name").asText())){
+                                payment.setMpesaReceiptNumber(item.path("value").asText());
+                            }
+                        }
                     }
                 }
 
