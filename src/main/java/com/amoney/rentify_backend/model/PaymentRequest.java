@@ -75,4 +75,10 @@ public class PaymentRequest {
     public void setMpesaReceiptNumber(String mpesaReceiptNumber) {
         this.mpesaReceiptNumber = mpesaReceiptNumber;
     }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    } 
 }
