@@ -55,6 +55,9 @@ public class PaymentService {
         payload.put("phoneNumber", phoneNumber);
         payload.put("amount", amount);
         payload.put("invoiceNumber", "INV-" + System.currentTimeMillis()); //Unique reference
+        payload.put("sharedShortCode", true);
+        payload.put("orgShortCode","");
+        pay
 
 
 
