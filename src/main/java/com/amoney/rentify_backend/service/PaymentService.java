@@ -40,8 +40,11 @@ public class PaymentService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(tokenUrl, request, Map.class);
 
-        return rresponse.getBody().get("access_token").toStrinng();
-        
+        return response.getBody().get("access_token").toString();
+    }
+    //Trigger STK Push
+    public String iinitiateStkPush(String phoneNumber, double amount) {
+        String token = getAccessToken();
     }
 
     
