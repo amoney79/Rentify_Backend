@@ -1,5 +1,6 @@
 package com.amoney.rentify_backend.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.print.attribute.standard.Media;
@@ -49,6 +50,13 @@ public class PaymentService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(token);
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("phoneNumber", phoneNumber);
+        payload.put("amount", amount);
+        
+
+
 
     }
 
