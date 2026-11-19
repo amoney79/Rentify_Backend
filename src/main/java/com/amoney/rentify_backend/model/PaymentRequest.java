@@ -1,10 +1,13 @@
 package com.amoney.rentify_backend.model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="payments")
 public class PaymentRequest {
     
+    @Id
+    private String id; //mongoDB automatically generates a string objectId
     private String phoneNumber; // Format: 2547xxxxxxxxx
     private double amount;
 
