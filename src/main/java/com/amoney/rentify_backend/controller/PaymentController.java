@@ -24,14 +24,16 @@ import com.fasterxml.jackson.databind.JsonNode;
     
 public class PaymentController {
 
+    private final PaymentRepository paymentRepository;
     @Autowired
     private  PaymentService paymentService;
 
     //Temporary in-memory stotre for payment statuses(replace)
 
 
-    PaymentController(PaymentService paymentService) {
+    PaymentController(PaymentService paymentService, PaymentRepository paymentRepository) {
         this.paymentService = paymentService;
+        this.paymentRepository = paymentRepository;
     }
 
 
@@ -126,7 +128,10 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
                                 payment.setMpesaReceiptNumber(item.path("value").asText());
                             }
                         }
+                    } else {
+                        payment.setStatus("FAILED");
                     }
+                   PaymentRepository.save(payment);
                 }
 
             }
