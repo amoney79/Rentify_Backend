@@ -14,7 +14,7 @@ public class PaymentRequest {
     private String phoneNumber; // Format: 2547xxxxxxxxx
     private double amount;
     private String ppaymentMethod; // "MPESA" OR "CARD"
-    
+    private String status;         // "PENDING", "COMPLETED", OR "FAILED"
 
     public PaymentRequest(String phoneNumber, double amount) {
         this.phoneNumber = phoneNumber;
