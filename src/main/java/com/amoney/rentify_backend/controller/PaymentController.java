@@ -30,7 +30,6 @@ public class PaymentController {
 
     private final PaymentRepository paymentRepository;
     private final PaymentService paymentService;
-    private final ObjectMapper objectMapper;
 
     //Initialize ObjectMapper directly here
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -41,7 +40,6 @@ public class PaymentController {
             ObjectMapper objectMapper) {
         this.paymentService = paymentService;
         this.paymentRepository = paymentRepository;
-        this.objectMapper = objectMapper;
     }
 
     @PostMapping("/pay")
