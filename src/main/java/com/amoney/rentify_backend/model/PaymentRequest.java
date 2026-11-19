@@ -62,4 +62,9 @@ public class PaymentRequest {
     public void setReference(String Reference) {
         this.reference = reference;
     }
+
+    public String getStatus(){
+        return status;
+    }
+    
 }
