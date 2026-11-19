@@ -1,6 +1,8 @@
 package com.amoney.rentify_backend.controller;
 
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,6 +37,9 @@ public class PaymentController {
         try{
             String response = paymentService.initiateStkPush(request.getPhoneNumber(), request.getAmount());
             return ResponseEntity.ok(response);
+
+            //Extract CheckoutRequestID from KCB'S JSON response to match the callback
+            String reference = "MPESA-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Payment failed: " + e.getMessage());
         }
