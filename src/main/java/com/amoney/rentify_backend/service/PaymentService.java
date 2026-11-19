@@ -13,5 +13,10 @@ public class PaymentService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    //Get OAuth Access Token
+    public String getAccessToken() {
+        String auth = consumerKey + ":" + consumerSecret; 
+    }
+
     
 }
