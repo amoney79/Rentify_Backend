@@ -54,6 +54,10 @@ public class PaymentController {
 
         try {
             String providerResponse = paymentService.initiateStkPush(phoneNumber, request.getAmount());
+            if (providerResponse == null || providerResponse.isBlank()) {
+                logger.warn("Payment provider returned an empty response");
+                return error(HttpStatus.BAD_GATEWAY, "The payment provider returned an empty response.");
+            }
             JsonNode responseJson = objectMapper.readTree(providerResponse);
             String reference = findCheckoutReference(responseJson);
             if (reference == null || reference.isBlank()) {
@@ -77,6 +81,9 @@ public class PaymentController {
         } catch (RestClientException exception) {
             logger.error("Could not initiate M-Pesa payment with the configured provider", exception);
             return error(HttpStatus.BAD_GATEWAY, "Could not reach the payment provider. Please try again.");
+        } catch (IllegalStateException exception) {
+            logger.error("Payment provider returned an incomplete response", exception);
+            return error(HttpStatus.BAD_GATEWAY, "The payment provider could not confirm the request.");
         } catch (JsonProcessingException exception) {
             logger.error("Payment provider returned an invalid response", exception);
             return error(HttpStatus.BAD_GATEWAY, "The payment provider returned an invalid response.");
