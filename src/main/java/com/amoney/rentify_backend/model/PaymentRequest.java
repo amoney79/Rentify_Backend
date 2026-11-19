@@ -26,6 +26,9 @@ public class PaymentRequest {
     public PaymentRequest(String phoneNumber, double amount, String paymentMethod, String reference, String status) {
         this.phoneNumber = phoneNumber;
         this.amount = amount;
+        this.paymentMethod = paymentMethod;
+        this.status = status;
+        this.mpesaReceiptNumber = mpesaReceiptNumber;
     }
     //Generate Getters and Setters
     public PaymentRequest() {
