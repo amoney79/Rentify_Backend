@@ -28,7 +28,8 @@ public class PaymentService {
         headers.setContentType(MediaType.APPLICATION_FROM_URLENCODED);
         headers.set("Authorization", "Basic " + encodedAuth);
 
-        
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", "client_credentials");
         
     }
 
