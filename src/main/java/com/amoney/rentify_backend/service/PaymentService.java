@@ -47,6 +47,8 @@ public class PaymentService {
         String token = getAccessToken();
 
         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(token);
 
     }
 
