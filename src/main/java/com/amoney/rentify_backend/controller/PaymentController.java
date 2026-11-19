@@ -131,7 +131,7 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
                     } else {
                         payment.setStatus("FAILED");
                     }
-                   PaymentRepository.save(payment);
+                paymentRepository.save(payment);
                 }
 
             }
