@@ -3,6 +3,7 @@ package com.amoney.rentify_backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.amoney.rentify_backend.model.PaymentRequest;
@@ -33,6 +34,4 @@ public class PaymentController {
         //parse JSON and update your database order status to PAID
         return ResponseEntity.ok("Received");
     }
-    
-    
 }
