@@ -1,5 +1,8 @@
 package com.amoney.rentify_backend.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="payments")
 public class PaymentRequest {
     
     private String phoneNumber; // Format: 2547xxxxxxxxx
