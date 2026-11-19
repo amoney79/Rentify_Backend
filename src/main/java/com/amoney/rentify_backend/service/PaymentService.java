@@ -1,14 +1,13 @@
 package com.amoney.rentify_backend.service;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.print.attribute.standard.Media;
-
-import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
