@@ -34,7 +34,7 @@ class PaymentControllerTest {
 
     @BeforeEach
     void setUp() {
-        controller = new PaymentController(paymentService, paymentRepository, new ObjectMapper());
+        controller = new PaymentController(paymentService, paymentRepository);
     }
 
     @Test
