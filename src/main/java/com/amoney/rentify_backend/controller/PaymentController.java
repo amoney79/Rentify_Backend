@@ -110,6 +110,7 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
 
             if(!stkCallback.isMissingNode()) {
                 String checkoutRequestId = stkCallback.path("checkoutRequestID").asText();
+                int resultCode = stkCallback.path("ResultCode").asInt(-1);
 
             }
         }
