@@ -63,6 +63,7 @@ public class PaymentController {
     Map<String, Object> response = new HashMap<>();
     response.put("status","PENDING");
     response.put("reference",reference);
+    response.put("response", reference);
 
 
 
