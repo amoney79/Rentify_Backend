@@ -30,6 +30,8 @@ public class PaymentController {
     public ResponseEntity<String> handleCallback(@RequestBody String callbackData) {
         // KCB sends the payment confirmation JSON here
         System.out.println("KCB callback Received: " + callbackData);
+        //parse JSON and update your database order status to PAID
+        return ResponseEntity.ok("Received");
     }
     
     
