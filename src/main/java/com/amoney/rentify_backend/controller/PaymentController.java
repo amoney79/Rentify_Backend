@@ -20,6 +20,9 @@ public class PaymentController {
     public ResponseEntity<String> makePayment(@RequestBody PaymentRequest request) {
         try{
             String response = paymentService.iinitiateStkPush(request.getPhoneNumber(), request.getAmount());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Payment failed: " + e.getMessage());
         }
     }
     
