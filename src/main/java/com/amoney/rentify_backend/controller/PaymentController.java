@@ -120,7 +120,7 @@ public ResponseEntity<Map<String, Object>> makeCardPayment(@RequestBody Map<Stri
                         payment.setStatus("COMPLETED");
 
                         //Extract M-PESA Receipt Number from callbackMetadata
-                        JsonNode items = stkCallback.patth("CallbackMetadata")
+                        JsonNode items = stkCallback.patth("CallbackMetadata").path("Item");
                     }
                 }
 
