@@ -13,7 +13,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import io.netty.handler.codec.base64.Base64;
 
 public class PaymentService {
 
@@ -26,6 +25,7 @@ public class PaymentService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     //Get OAuth Access Token
+    @SuppressWarnings("rawtypes")
     public String getAccessToken() {
         String auth = consumerKey + ":" + consumerSecret;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes()); 
