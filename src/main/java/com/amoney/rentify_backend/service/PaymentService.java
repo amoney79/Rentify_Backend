@@ -1,5 +1,7 @@
 package com.amoney.rentify_backend.service;
 
+import java.util.Map;
+
 import javax.print.attribute.standard.Media;
 
 import org.apache.tomcat.util.http.parser.MediaType;
@@ -36,7 +38,7 @@ public class PaymentService {
         body.add("grant_type", "client_credentials");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, headers);
-        ResponseEntity<Map> response = setTemplate.postForEntity(tokenUrl, request, Map.class);
+        ResponseEntity<Map> response = restTemplate.postForEntity(tokenUrl, request, Map.class);
         
     }
 
