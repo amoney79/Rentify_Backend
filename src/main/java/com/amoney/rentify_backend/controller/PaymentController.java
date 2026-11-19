@@ -5,10 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.amoney.rentify_backend.model.PaymentRequest;
 import com.amoney.rentify_backend.service.PaymentService;
 
+@RestController
+@RequestMapping("/api/payments")
 @CrossOrigin(origins = "*") //Allows my Fontend to call this APIy
     
 public class PaymentController {
