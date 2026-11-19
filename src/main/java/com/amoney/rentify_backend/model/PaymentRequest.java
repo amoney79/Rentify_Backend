@@ -48,4 +48,15 @@ public class PaymentRequest {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id ;
+    }
+    public String getReference() {
+        return reference;
+    }
 }
