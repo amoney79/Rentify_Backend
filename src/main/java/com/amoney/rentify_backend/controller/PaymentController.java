@@ -21,12 +21,15 @@ public class PaymentController {
     @Autowired
     private  PaymentService paymentService;
 
+    //Temporary in-memory stotre for payment statuses(replace)
+
 
     PaymentController(PaymentService paymentService) {
         this.paymentService = paymentService;
     }
 
 
+    //Initiate M-Pesa STK Push and Save PENDING Record to DB
     @PostMapping("/pay")
     public ResponseEntity<String> makePayment(@RequestBody PaymentRequest request) {
         try{
