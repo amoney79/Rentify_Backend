@@ -181,8 +181,11 @@ ngrok http 8080
 ## Backend Roadmap
 
 [x] **Phase 1 - Core Payment & Persistence Engine:** KCB Buni OAuth 2.0 integration, STK Push trigger, Callback webhook parser, card endpoint, and MongoDB repository.
+
 [] **Phase 2 - KCB B2C Automated Refunds:** AAutomated M-Pesa B2C disbursement endpoint to refund viewing deposits upon verified aggentt/GPS check-in.
+
 [] **Phase 3 - Pooperty & Schedule Microservices:** MongoDB schemas and REST APIs for verified property listings, landlord KYC documents, and time-slot locking.
+
 [] **Phase 4 - JWT Authenticatiob & Role RBAC:** Spring Security integration for Tenants, Landlords, and Rentify Admins.
 
 ---
