@@ -7,7 +7,7 @@
 
 <!--Technology Stack Badges -->
 <p>
-<img src="https://shields.io" alt="Java 25" />
+<img src="https://shields.io/badge/Java_25-blue?logo=java" alt="Java 25" />
 <img src="https://shields.io"  alt="Spring Boot" />
 <img src="https://shields.io" alt="MongoDB" />
 <img src="https://shields.io" alt="M-Pesa KCB Buni" />
