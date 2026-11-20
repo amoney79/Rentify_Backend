@@ -172,5 +172,23 @@ ngrok http 8080
 
 ## Security & Compliance
 **Zero Credential Exposure:** KCB Consumer Keys, Consumer Secrets, and MongoDB URIs remain isolated on the server side and are never exposed to client browsers.
+
 **Idempotent Reference Indexing:** Unique MongoDB indexes (`@Indexed(unique = true)`) prevent duplicate transaction records during network retries.
 **Production Hardening:** Configured for stricts CORS origin whitelisting and HTTPS TLS termination prior to live KCB Buni production custover.
+
+---
+
+## Backend Roadmap
+
+[x] **Phase 1 - Core Payment & Persistence Engine:** KCB Buni OAuth 2.0 integration, STK Push trigger, Callback webhook parser, card endpoint, and MongoDB repository.
+[] **Phase 2 - KCB B2C Automated Refunds:** AAutomated M-Pesa B2C disbursement endpoint to refund viewing deposits upon verified aggentt/GPS check-in.
+[] **Phase 3 - Pooperty & Schedule Microservices:** MongoDB schemas and REST APIs for verified property listings, landlord KYC documents, and time-slot locking.
+[] **Phase 4 - JWT Authenticatiob & Role RBAC:** Spring Security integration for Tenants, Landlords, and Rentify Admins.
+
+---
+
+<div align="center">
+
+**Rentify Technologies - Backend Engineering**
+*Powering Trusted Real Estate Transactions Across East Africa*
+&copy; 2026 Rentify Technologies. All rights reserved.
