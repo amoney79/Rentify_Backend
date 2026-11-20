@@ -35,8 +35,8 @@ public class PaymentController {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public PaymentController(
-            PaymentService paymentService,
-            PaymentRepository paymentRepository) {
+            PaymentRepository paymentRepository,
+            PaymentService paymentService) {
         this.paymentService = paymentService;
         this.paymentRepository = paymentRepository;
     }
