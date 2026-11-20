@@ -16,9 +16,9 @@
 
 <!--System status Badges--> 
 <p>
-<img src="https://shields.io" alt="Region" />
-<img src="https://shields.io" alt="Security" />
-<img src="https://shields.io" alt="Status" />
+<img src="https://img.shields.io/badge/Region-Kenya-EA4335?style=for-the-badge&logo=googlemaps&logoColor=white" alt="Region" />
+<img src="https://img.shields.io/badge/Security-JWT_&_OAuth2-000000?style=for-the-badge&logo=auth0&logoColor=white" alt="Security" />
+<img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge&logo=githubactions&logoColor=white" alt="Status" />
 </p>
 
 </div>
