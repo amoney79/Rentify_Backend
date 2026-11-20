@@ -38,3 +38,29 @@ It automates the entire payment lifecycle:
 ---
 
 ## 🏗️ System & Payment Sequence Architecture
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Tenant as 🧑 Tenant (Frontend)
+    participant API as ⚙️ Rentify Spring Boot API
+    participant DB as 🍃 MongoDB (payments)
+    participant KCB as 🏦 KCB Buni Gateway
+
+    Tenant->>API: POST /api/payments/pay (phoneNumber, amount)
+    API->>KCB: POST /token (OAuth 2.0 Client Credentials)
+    KCB-->>API: Bearer Access Token
+    API->>KCB: POST /mm/api/request/1.0.0/stkpush
+    KCB-->>API: CheckoutRequestID
+    API->>DB: Save Document (Status: PENDING)
+    API-->>Tenant: 200 OK (reference: CheckoutRequestID)
+
+    loop Every 3 Seconds
+        Tenant->>API:GET/api/payments/status/{reference}
+        API->>DB:fiindByReference(reference)
+        DB->>API: Status: PENDING
+        API->>Tenant: Status: PENDING
+    end
+
+
+    
