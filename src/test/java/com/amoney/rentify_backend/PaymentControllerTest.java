@@ -30,14 +30,11 @@ class PaymentControllerTest {
     @Mock
     private PaymentService paymentService;
 
-    @Mock
-    private ObjectMapper objectMapper;
-
     private PaymentController controller;
 
     @BeforeEach
     void setUp() {
-        controller = new PaymentController(paymentRepository, paymentService, objectMapper);
+        controller = new PaymentController(paymentRepository, paymentService);
     }
 
     @Test
