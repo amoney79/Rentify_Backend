@@ -1,6 +1,6 @@
 <div align="center">
 
-# RENTIFY BACKEND
+# ⚙️ RENTIFY BACKEND
 ### Core Payment Gateway, Escrow & Scheduling Engine
 
 *Powering instant KCB Buni M-Pesa STK Push, Visa card processing and real-tiime MongoDB transaction tracking for Kenyan real estate.*
@@ -17,4 +17,12 @@
 <!--System status Badges--> 
 <p>
 <img src="https://shields.io" alt="Region" />
-<img src="https://shield.io" alt="Security" />
+<img src="https://shields.io" alt="Security" />
+<img src="https://shields.io" alt="Status" />
+</p>
+
+</div>
+
+---
+
+## 📌 
