@@ -4,7 +4,6 @@ import com.amoney.rentify_backend.controller.PaymentController;
 import com.amoney.rentify_backend.model.PaymentRequest;
 import com.amoney.rentify_backend.repository.PaymentRepository;
 import com.amoney.rentify_backend.service.PaymentService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
