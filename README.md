@@ -87,7 +87,31 @@ sequenceDiagram
       </ul>
 </td>
 <td width="50%" valign="top">
-
+<h3>MongoDB & REST Infrastructure</h3>
+<ul>
+<li><strong>Document Persistence:</strong> Stores full audit trails in MongoDB with indexed unique transaction references.</li>
+        <li><strong>Multi-Channel Checkout:</strong> Unified controller handling both Safaricom M-Pesa STK Push and Visa/Mastercard endpoints.</li>
+        <li><strong>Frontend-Ready CORS & JSON:</strong> Clean JSON responses engineered for seamless integration with the Rentify Tailwind/JS frontend.</li>
+      </ul>
 </td>
 </tr>
 </tabble>
+
+---
+
+## Project Structure
+
+```text
+src/main/java/com/amoney/rentify_backend/
+├── controller/
+│   └── PaymentController.java      # REST endpoints (/pay, /card, /callback, /status)
+├── dto/
+│   └── PaymentRequest.java         # Request payload validation & mapping
+├── model/
+│   └── Payment.java                # MongoDB @Document schema for transactions
+├── repository/
+│   └── PaymentRepository.java      # Spring Data MongoDB query interface
+├── service/
+│   └── PaymentService.java         # KCB Buni OAuth 2.0 & STK Push integration
+└── RentifyApplication.java         # Spring Boot application entry point
+```
