@@ -115,3 +115,37 @@ src/main/java/com/amoney/rentify_backend/
 │   └── PaymentService.java         # KCB Buni OAuth 2.0 & STK Push integration
 └── RentifyApplication.java         # Spring Boot application entry point
 ```
+
+---
+
+## Getting Started
+
+## Prerequisites
+**JDK 25** & **Maven 3.8+**
+**MongoDB**
+**KCB Buni Developer Account**
+**ngrok**
+
+## 1. Clone & Configure Environment
+
+```bash
+git clone https://github.com
+cd rentify_backend
+
+```
+
+Configure 'src/main/resources/application.properties`:
+```properties
+# Server & Database
+Server.port=8080
+spring.data.mongodb.uri=mongodb://localhost:27017/rentify_db
+
+# KCB Buni Sandbox Credentials
+kcb.consumer.key=YOUR_KCB_CONSUMER_KEY
+kcb.consumer.secret=YOUR_KCB_CONSUMER_SECRET
+kcb.token.url=https://kcbgroup.com
+kcb.stk.url=https://kcbgroup.com
+kcb.callback.url=https://ngrok-free.app
+```
+
+
