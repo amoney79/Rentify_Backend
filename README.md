@@ -148,4 +148,29 @@ kcb.stk.url=https://kcbgroup.com
 kcb.callback.url=https://ngrok-free.app
 ```
 
+## 2. Start   Webhook Tunnel & Server
+```bash
+# Terminal 1: Exponse local port 8080 for KCB callbacks 
+ngrok http 8080
 
+# Terminal 2. Run the Spring Boot backend
+./mvnw spring-boot:run
+```
+
+---
+
+## API Reference
+| Method | Endpoint | Description | Payload / Params |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/payments/pay` | Initiates KCB Buni M-Pesa STK Push | `{"phoneNumber": "2547...", "amount": "4500"}` |
+| `POST` | `/api/payments/card` | Processes Visa / Mastercard checkout | `{"amount": "4500", "cardNumber": "..."}` |
+| `GET` | `/api/payments/status/{ref}` | Polls real-time transaction status from MongoDB | Path variable: `CheckoutRequestID` or `VISA-...` |
+| `POST` | `/api/payments/callback` | Asynchronous webhook for KCB Buni confirmations | KCB STK Callback JSON |
+
+
+---
+
+## Security & Compliance
+**Zero Credential Exposure:** KCB Consumer Keys, Consumer Secrets, and MongoDB URIs remain isolated on the server side and are never exposed to client browsers.
+**Idempotent Reference Indexing:** Unique MongoDB indexes (`@Indexed(unique = true)`) prevent duplicate transaction records during network retries.
+**Production Hardening:** Configured for stricts CORS origin whitelisting and HTTPS TLS termination prior to live KCB Buni production custover.
