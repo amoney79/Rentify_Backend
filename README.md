@@ -71,3 +71,23 @@ sequenceDiagram
     DB->>API: Status: COMPLETED + Receipt
     API->>Tenant: 200 OK (Trigger PDFF Receipt)
 ```
+
+---
+
+##  💎 Core Backend Capabilities
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<h3>KCB Buni M-Pesa Engine</h3>
+<ul>
+<li><strong>Automated Token Management:</strong> Encodes consumer keys and secrets on the fly for KCB UAT/Production OAuth endpoints.</li>
+        <li><strong>Dynamic Invoice Generation:</strong> Generates unique invoice references and tracks KCB <code>CheckoutRequestID</code> mappings.</li>
+        <li><strong>Resilient Callback Parser:</strong> Safely parses nested KCB JSON callback payloads to extract <code>MpesaReceiptNumber</code> metadata.</li>
+      </ul>
+</td>
+<td width="50%" valign="top">
+
+</td>
+</tr>
+</tabble>
