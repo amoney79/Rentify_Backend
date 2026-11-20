@@ -7,7 +7,7 @@
 
 <!--Technology Stack Badges -->
 <p>
-<img src="https://shields.io/badge/Java_25-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 25" />
+<img src="https://img.shields.io/badge/Java-25-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 25" />
 <img src="https://img.shields.io/badge/Spring_Boot-3.5.6-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"  alt="Spring Boot" />
 <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
 <img src="https://img.shields.io/badge/M--Pesa_KCB_Buni-Payments-00A651?style=for-the-badge&logo=safaricom&logoColor=white" alt="M-Pesa KCB Buni" />
