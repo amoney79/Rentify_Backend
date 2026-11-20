@@ -121,10 +121,10 @@ src/main/java/com/amoney/rentify_backend/
 ## Getting Started
 
 ## Prerequisites
-**JDK 25** & **Maven 3.8+**
-**MongoDB**
-**KCB Buni Developer Account**
-**ngrok**
+**JDK 25** & **Maven 3.8+** |
+**MongoDB** |
+**KCB Buni Developer Account** |
+**ngrok** 
 
 ## 1. Clone & Configure Environment
 
