@@ -33,7 +33,7 @@ It automates the entire payment lifecycle:
 1. **Search OAuth 2.0 Handshake:** Dynamically authenticates with KCB Buni using Base64-encoded client credentials.
 2. **Instant STK Push & Card Processing:** Triggers mobile money prompts to tenants handsets and processes bank cards checkouts.
 3. **Asynchronous Webhook Ingestion:** Listens for KCB Buni payment callbacks, validates statuses, and extracts official M-Pesa receipt numbers.
-4. **Real-Time Status Polling:** Servers Low - latency transaction states ('PENDING','COMPLETED','FAILED') to the frontend receipt engine.
+4. **Real-Time Status Polling:** Servers Low - latency transaction states ( 'PENDING' , 'COMPLETED' , 'FAILED' ) to the frontend receipt engine.
 
 ---
 
@@ -62,5 +62,12 @@ sequenceDiagram
         API->>Tenant: Status: PENDING
     end
 
+    Note over Tenant, KCB: Tenant enters M-Pesa PIN on handset
+    KCB->>API: POST /api/payments/callback (ResultCode: 0, Receipt)
+    API->>DB: Update Status: COMPLETED + MpesaReceiptNumber
 
-    
+    Tenant->>API: GET api/payments/status/{reference}
+    API->>DB: findByReference(reference)
+    DB->>API: Status: COMPLETED + Receipt
+    API->>Tenant: 200 OK (Trigger PDFF Receipt)
+```
